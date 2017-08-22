@@ -19,7 +19,7 @@ the fixed points.
 
 const int CUTOFF = 100;	// Cutoff value for graph
 const long FPVAL = 10000; // Value to start finding fixed points
-const double r = 3.56;	// Growth rate
+const double r = 3.5;	// Growth rate
 const double x_0 = 0.2;	// Initial value
 
 void plotStuff(vector<int> x, vector<double> y){

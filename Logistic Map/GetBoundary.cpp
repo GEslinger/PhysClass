@@ -26,6 +26,9 @@ happen.
 
 **********************************************************/
 
+// auto leftFunc = [](int pos){ return (pos > 1) || (pos == 0); };		// Boundary between 1 and 2
+// auto rightFunc = [](int pos){ return (pos < 2) && (pos != 0); };
+
 // auto leftFunc = [](int pos){ return (pos > 2) || (pos == 0); };		// Boundary between 2 and 4
 // auto rightFunc = [](int pos){ return (pos < 4) && (pos != 0); };
 
