@@ -4,25 +4,34 @@
 #include <vector>
 using namespace std;
 
+/**********************************************************
+
+This is the program for the bifurcation diagram! :D
+The flow is simple: For each r value between 1 and 4 (with
+resolution of dr), 100 values of the logistic map are saved
+in the solutions vector. The values are chosen far enough
+away from the origin to remove the effects of the initial
+behavior. The values are paired with the r value they were
+calculated at and then sent to the plotter.
+
+**********************************************************/
+
 const int START = 900;
 const int CUTOFF = 1000;	// Cutoff value for finding attractors
 const double dr = 0.001;
-const double x0 = 0.5;	// Initial value
+const double x0 = 0.5;		// Initial value
 
 void plotStuff(vector<double> x, vector<double> y){	// Pretty plotting shenanigans
 	Gnuplot gp;
 
 	gp << "set xrange [1:4]\n";
 	gp << "set yrange [0:1]\n";
-	gp << "set term png font \"FreeSerif,12\"\n";
+	gp << "set term wxt font \"FreeSerif,12\"\n";
 	gp << "set title \"End Behavior of the Logistic Function vs. Growth Rate (x_0 = 0.5)\"\n";
-	gp << "show title\n";
 	gp << "set xlabel \"r\"\n";
 	gp << "set ylabel \"x_n\"\n";
-	gp << "show xlabel\n";
-	gp << "show ylabel\n";
 	gp << "set output \"plot.png\"\n";
-	gp << "plot '-' with points pointtype 7 pointsize 0.001 lc rgb \"black\" notitle\n";
+	gp << "plot '-' with dots lc rgb \"black\" notitle\n";
 	gp.send1d(boost::make_tuple(x,y));
 }
 
