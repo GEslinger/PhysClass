@@ -30,8 +30,8 @@ returns a path. plotPath just plots the path given with axes of path[0],
 path[1].
 
 RangeVAngle is more complicated, as it performs all calculation and 
-plots the range vs. angle graph. It iterates from 0 to pi/2 with a step
-size of dth. For each iteration, it gets the path with getPath. The
+plots the range vs. angle graph. It iterates from -pi/2 to pi/2 with a 
+step size of dth. For each iteration, it gets the path with getPath. The
 final x value is the range when the object returns to the ground, by
 the definition of the getPath function.
 
@@ -39,10 +39,10 @@ the definition of the getPath function.
 
 const double v_i = 10;		// Initial velocity for both the trajectory and the range v. angle plot
 const double th = PI/6;		// Firing angle for the trajectory plot
-const double y_0 = 0;		// Global starting height, Should be either zero or something positive, as the range vs. angle graph must be complete.
+const double y_0 = 1;		// Global starting height, Should be either zero or something positive, as the range vs. angle graph must be complete.
 
 const double g = 9.8;		// Gravitational acceleration (negative)
-const double b = 0.56832;	// Calculated drag constant for Syd Miyasaki
+const double b = 0;//.56832;	// Calculated drag constant for Syd Miyasaki
 const double dt = 0.001;	// Timestep
 const double dth = 0.001;	// Step in angle for the range v. angle plot
 
@@ -123,7 +123,7 @@ void rangeVAngle(){			// Calculation and plotting of the range vs. angle plot
 	vector<double> ranges;	// Declare vectors
 	vector<double> angles;
 
-	for(double ang = 0; ang < PI/2.0; ang += dth){	// From 0 to pi/2, steps of dth
+	for(double ang = -PI/2; ang < PI/2; ang += dth){	// From -pi/2 to pi/2, steps of dth
 
 		double vx_0 = v_i*cos(ang);	// From v_i and ang, determine the initial velocities
 		double vy_0 = v_i*sin(ang);	
@@ -137,7 +137,7 @@ void rangeVAngle(){			// Calculation and plotting of the range vs. angle plot
 	Gnuplot gp;		// Now plot!
 
 	gp << setprecision(3);
-	gp << "set xrange [0:" << PI/2 << "]\n";
+	gp << "set xrange [" << -PI/2 << ":" << PI/2 << "]\n";
 	gp << "set yrange [0:" << getMaxVal(ranges)*1.1 << "]\n";
 	gp << "set format y \"%.1f\"\n";
 	gp << "set term png size 720,480 font \"FreeSerif,12\"\n";
