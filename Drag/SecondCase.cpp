@@ -39,6 +39,7 @@ the definition of the getPath function.
 
 const double v_i = 10;		// Initial velocity for both the trajectory and the range v. angle plot
 const double th = PI/6;		// Firing angle for the trajectory plot
+const double y_0 = 0;		// Global starting height, Should be either zero or something positive, as the range vs. angle graph must be complete.
 
 const double g = 9.8;		// Gravitational acceleration (negative)
 const double b = 0.56832;	// Calculated drag constant for Syd Miyasaki
@@ -55,8 +56,9 @@ private:
 	double x, y, vx, vy;
 };
 
-DragObject2D::DragObject2D(double vx_0, double vy_0){	// Constructor sets x and y to zero, initial velocities as arguments
-	x = 0, y = 0;
+DragObject2D::DragObject2D(double vx_0, double vy_0){	// Constructor sets x to zero, y to starting height, initial velocities as arguments
+	x = 0;
+	y = y_0;
 	vx = vx_0;
 	vy = vy_0;
 }
