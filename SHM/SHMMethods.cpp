@@ -8,6 +8,33 @@
 #include "Tools.hpp"
 using namespace std;
 
+
+/*****************************************************************************
+
+This program uses the classes and a few functions from Tools.hpp to model a
+block-spring system in simple harmonic motion (SHM). The program implements
+two methods: Euler's method and the Euler-Cromer method. The variables of the
+differential equation are stored in a classes named accordingly, along with
+accessor methods and a mutator to apply the defined euler step. Since 
+EulerCromer1D is a subclass of Euler1D, they can be used polymorphically by
+allocating memory for them and referencing them by a pointer to Euler1D.
+
+In the applyMethod function, the line with obj->update(dt) applies the update
+function of whichever class is supplied, not the one for Euler1D. It returns a 
+struct of type Path1D (from Tools.hpp) to avoid nasty data types like 2D 
+vectors or having to return multiple values.
+
+The plotpath function simply takes the Path1D, along with some information
+about what's being plotted and how big it is, and sends it to gnuplot.
+
+Finally, the main method creates the objects, applies the method, and plots
+them both. The getMaxValue function returns the amplitude of the Euler Method
+path (which should be larger) and plots them both methods at the same scale.
+Then, the created objects are deleted and the program ends.
+
+*****************************************************************************/
+
+
 const double x_0 = inputDouble(0, "Initial Position");		// Initial position
 const double v_0 = inputDouble(10, "Initial Velocity");		// Initial velocity
 const double dt = inputDouble(0.005, "Time Step");			// Time step
