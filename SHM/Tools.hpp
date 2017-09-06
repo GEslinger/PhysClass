@@ -27,7 +27,6 @@ protected:		// Protected instead of private allows the child class to make modif
 
 Euler1D::Euler1D(double x_0, double v_0, std::function<double(double,double)>& func){
 	x = x_0;	// Constructor initializes position, velocity, and euler step
-	inspect(x);
 	v = v_0;
 	f = func;
 }
