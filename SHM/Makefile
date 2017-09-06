@@ -12,4 +12,4 @@ SHMMethods.o : Tools.hpp SHMMethods.cpp
 	$(CC) SHMMethods.cpp $(CFLAGS)
 
 clean :
-	rm -f *.o *~ main
+	rm -f *.o *~ ./*.png main
