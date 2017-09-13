@@ -52,6 +52,7 @@ Path1D applyMethod(Euler1D* obj){	// Function to apply euler method to a pointer
 
 	for(double t = 0; t < SIM_TIME; t += dt){	// Iterate from 0 to SIM_TIME with the defined time step
 		out.x.push_back(obj->getX());	// Add the current position to the path
+		out.v.push_back(obj->getV());	// Add the current velocity to the path (for phase space)
 		out.t.push_back(t);				// Add the current time to the path
 		obj->update(dt);				// Apply the update method of obj (either Euler's or Euler-Cromer)
 	}
@@ -71,10 +72,28 @@ void plotPath(Path1D p, double amp, string title, string fname){	// Used to plot
 	gp << "set term png size 720,480 font \"FreeSerif,12\"\n";
 	gp << "set xlabel \"t (s)\"\n";
 	gp << "set ylabel \"x (m)\"\n";
-	gp << "set title \"Position Vs. Time in Simple Harmonic Motion\\nUsing " << title << "\n"; 
+	gp << "set title \"Position Vs. Time in Simple Harmonic Motion\\nUsing " << title << "\"\n"; 
 	gp << "set output \"" << fname << "\"\n";
 	gp << "plot '-' with dots lc rgb \"black\" notitle\n";
 	gp.send1d(boost::make_tuple(p.t,p.x));	// Separate the path into components and plot it!
+}
+
+
+void plotPhaseSpace(Path1D p, string title, string fname){	
+	Gnuplot gp;	// Instance of gnuplot terminal stream
+	vector<double> v = getMomentum(p.v, m);
+
+	gp << setprecision(3);
+	gp << "set xrange [" << -1.1*getMaxVal(p.x) << ":" << 1.1*getMaxVal(p.x) << "]\n";
+	gp << "set yrange [" << -1.1*getMaxVal(v) << ":" << 1.1*getMaxVal(v) << "]\n";
+	gp << "set format y \"%.1f\"\n";
+	gp << "set term png size 720,480 font \"FreeSerif,12\"\n";
+	gp << "set xlabel \"x (m)\"\n";
+	gp << "set ylabel \"v (m/s)\"\n";
+	gp << "set title \"Phase Space Diagram of SHM using " << title << "\"\n"; 
+	gp << "set output \"" << fname << "\"\n";
+	gp << "plot '-' with dots lc rgb \"black\" notitle\n";
+	gp.send1d(boost::make_tuple(p.x,v));	// Separate the path into components and plot it!
 }
 
 
@@ -88,6 +107,9 @@ int main(){
 	double bigAmp = getMaxVal(badPath.x);	// Amplitude of the oscillation (max value of pos)
 	plotPath(badPath, bigAmp, "Euler's Method", "BadMethod.png");			// Plot them accordingly!
 	plotPath(goodPath, bigAmp, "The Euler-Cromer Method", "GoodMethod.png");
+
+	plotPhaseSpace(badPath, "Euler's Method", "BadPSD.png");
+	plotPhaseSpace(goodPath, "the Euler-Cromer Method", "GoodPSD.png");
 
 	delete badSpring;	// Garbage collection to free up allocated memory
 	delete goodSpring;

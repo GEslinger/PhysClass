@@ -40,6 +40,7 @@ valid when using string.stod. That's it!
 
 struct Path1D{				// A custom data type that makes passing around the position and time values easier
 	std::vector<double> x;	// Position
+	std::vector<double> v;
 	std::vector<double> t;	// Time
 };
 
@@ -94,6 +95,17 @@ double getMaxVal(std::vector<double> a){// My function to get the largest value 
 		if(a[i] > maxVal) maxVal = a[i];// If a[i] is greater than the maximum, consider it the new maximum
 	}
 	return maxVal;	// Return the max
+}
+
+
+std::vector<double> getMomentum(std::vector<double>& v, double m){	// This simple method performs scalar multiplication on a vector of velocities by mass, yielding momentum
+	std::vector<double> out;
+
+	for(int i = 0; i < v.size(); i++){	// Iterate through v
+		out.push_back(v[i]*m);			// Multiply by mass and add to output
+	}
+
+	return out;
 }
 
 
