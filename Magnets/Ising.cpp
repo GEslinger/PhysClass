@@ -11,8 +11,8 @@ const int lattice = inputInt(100,"lattice size");
 const double defaultJ = 1;
 const double firstTemp = inputDouble(1,"ambient temperature");;
 const double defaultKb = 1;
-const double tStep = 0.01;
-const int MAX_ITERS = inputInt(500,"maximum iterations");
+const double tStep = 0.001;
+const int MAX_ITERS = inputInt(200,"maximum iterations");
 
 void plotSpinMatrix(Magnet* m){
 	Gnuplot gp; 
@@ -33,7 +33,7 @@ void plotSpinMatrix(Magnet* m){
 void plotEnergy(vector<double>& eng, vector<double>& t){
 	Gnuplot gp;
 	gp << setprecision(3);
-	gp << "set xrange [1:5]\n";
+	gp << "set xrange [1:4]\n";
 	gp << "set yrange [-2:0]\n";
 	gp << "set title \"Energy per Spin vs. Temperature in the Ising Model\\n";
 	gp << "with k_b = " << defaultKb << ", J = " << defaultJ << "\"\n";
@@ -48,8 +48,8 @@ void plotEnergy(vector<double>& eng, vector<double>& t){
 void plotDeriv(vector<double>& eng, vector<double>& t){
 	Gnuplot gp;
 	gp << setprecision(3);
-	gp << "set xrange [1:5]\n";
-	gp << "set yrange [0:2]\n";
+	gp << "set xrange [1:4]\n";
+	gp << "set yrange [0:1.5]\n";
 	gp << "set title \"Heat Density vs. Temperature in the Ising Model\\n";
 	gp << "with k_b = " << defaultKb << ", J = " << defaultJ << "\"\n";
 	gp << "set xlabel \"Temperature (inv. Boltzmann Constants)\"\n";
@@ -71,12 +71,13 @@ int main(){
 	plotSpinMatrix(mag);
 	mag->randomize();
 
-	for(double t = 0.1; t < 5; t+= tStep){
+	for(double t = 0.8; t < 4; t+= tStep){
 		mag->setTemp(t);
 		mag->simulate(MAX_ITERS);
 		energy.push_back(mag->getEnergy());
 		time.push_back(t);
 		mag->randomize();
+		cout << "Finished " << t << endl;
 	}
 
 	vector<double> rolling = rollingAverage(energy,0.2/tStep);
