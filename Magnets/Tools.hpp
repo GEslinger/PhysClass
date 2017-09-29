@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
+#define PI 3.1415926
 
 
 int inputInt(int def, std::string title){		// Function to prompt and input a double, accepts parameters for name and default value
@@ -55,37 +57,24 @@ double inputDouble(double def, std::string title){		// Function to prompt and in
 	return output;	// Output the double!
 }
 
-double averageVec(std::vector<double>& v){
-	double sum = 0;
-	for(int i = 0; i < v.size(); i++) sum += v[i];
-	return sum/v.size();
+double weight(double x, double u, double s){		// Returns PCF(x,u,s), aka the value of the std. normal curve at x
+	double term1 = 1/std::sqrt(2*PI*s*s);			// with mean u and std.dev. s
+	double term2 = std::exp(-((x-u)*(x-u))/(2*s*s));
+	return term1*term2;
 }
 
-std::vector<double> rollingAverage(std::vector<double> v, int s){
-	std::vector<double> out;
-	std::vector<double> w;
-	int count = 0;
+std::vector<double> expAvg(std::vector<double> v, double s){	// A weighted rolling average using the normal distribution.
+	std::vector<double> out;	// The rolling average output
 
-	for(int i = 0; i < v.size(); i++){
-		w.push_back(v[i]);
-		if(i > s){
-			w.erase(w.begin());
+	for(double i = 0; i < v.size(); i++){	// For each point,
+		double sum = 0;						// Set up a sum of weighted neighbors
+		for(double j = 0; j < v.size(); j++){		// For each neighbor
+			double z_j = (j-i)/(v.size());			// Convert their distance from the point into a z-score
+			sum += v[j]*weight(z_j,0,s)/v.size();	// Plug it into the normal curve, then weight it by value and normalize
 		}
-		out.push_back(averageVec(w));
+		out.push_back(sum);	// Add the weighted sum of neighbors to the output
 	}
-
-	return out;
-}
-
-std::vector<double> derivate(std::vector<double> x, std::vector<double> y){	// Returns dy/dx
-	std::vector<double> out;
-	out.push_back(0);
-
-	for(int i = 1; i < y.size(); i++){
-		out.push_back((y[i]-y[i-1])/(x[i]-x[i-1]));
-	}
-
-	return out;
+	return out;	// Return the rolling average!
 }
 
 #endif

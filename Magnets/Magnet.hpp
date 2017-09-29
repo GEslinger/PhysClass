@@ -1,5 +1,12 @@
 #include <vector>
 
+/*****************************************************************************
+
+Definition of Magnet class, allowing for implementation with different
+algorithms. Based around the Ising model (spins is a 2-D vector)
+
+*****************************************************************************/
+
 class Magnet{
 public:
 	Magnet(int sz, double temp, double boltz, double energy);
