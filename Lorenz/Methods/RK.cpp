@@ -1,4 +1,4 @@
-#include "Method.h"
+#include "Method.hpp"
 
 void RK::step(){
 	double t1 = t;

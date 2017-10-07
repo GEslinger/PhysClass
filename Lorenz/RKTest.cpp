@@ -1,7 +1,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
-#include "Method.h"
+#include "Methods/Method.hpp"
 #define FUNC [](double t, double x)
 using namespace std;
 

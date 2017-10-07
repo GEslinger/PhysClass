@@ -1,4 +1,4 @@
-#include "Method.h"
+#include "Method.hpp"
 
 void EC::step(){
 	t += h;

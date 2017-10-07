@@ -1,26 +1,16 @@
-CC = g++
+CXX = g++
 STD = -std=c++11
 LIBS = -lboost_system -lboost_iostreams
-OBJS = RKTest 
-CFLAGS = -c $(STD)
+EXECS = RKTest 
+RK_OBJS = RKTest.o Analysis/Graph.o Methods/RK.o Methods/EC.o
+CXXFLAGS = $(STD) -c
 LFLAGS = $(STD) $(LIBS)
 
-all : $(OBJS)
+all : $(EXECS)
 
-RKTest : RKTest.o Graph.o RK.o EC.o
-	$(CC) RKTest.o Graph.o RK.o EC.o -o RKTest $(LFLAGS) 
-
-RKTest.o : RKTest.cpp Method.h
-	$(CC) RKTest.cpp $(CFLAGS)
-
-Graph.o : Graph.cpp
-	$(CC) Graph.cpp $(CFLAGS)
-
-RK.o : RK.cpp Method.h
-	$(CC) RK.cpp $(CFLAGS)
-
-EC.o : EC.cpp Method.h
-	$(CC) EC.cpp $(CFLAGS)
+RKTest : $(RK_OBJS) # All objects are compiled by implicit rules! Hurray for reading the GNU Make manual!
+	$(CXX) $(RK_OBJS) -o RKTest $(LFLAGS)
 
 clean :
-	rm -f *.o *~ ./*.png $(OBJS)
+	rm -f ./*.png $(EXECS)
+	rm -rf $(RK_OBJS) *~
