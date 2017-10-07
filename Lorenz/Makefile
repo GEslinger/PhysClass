@@ -10,7 +10,7 @@ all : $(OBJS)
 RKTest : RKTest.o Graph.o RK.o EC.o
 	$(CC) RKTest.o Graph.o RK.o EC.o -o RKTest $(LFLAGS) 
 
-RKTest.o : Method.h
+RKTest.o : RKTest.cpp Method.h
 	$(CC) RKTest.cpp $(CFLAGS)
 
 Graph.o : Graph.cpp

@@ -2,7 +2,7 @@
 #include <bitset>
 #define U uint64_t
 
-const U n = 1000000000;
+const U n = 10000;
 main(){
 	bool* a = new bool[n];
 	for(U i=2;i<n;i++){
