@@ -13,6 +13,12 @@ public:
 	}
 	double getX(){return x;}
 	double getT(){return t;}
+	void changeFunc(dfunc f){stepFunc = f;}
+	void reset(double x0, double dt){
+		t = 0;
+		x = x0;
+		h = dt;
+	}
 	virtual void step() = 0;
 
 protected:

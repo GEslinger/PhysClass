@@ -1,43 +1,55 @@
 #include <string>
-#include <cmath>
 #include <vector>
+#include <iostream>
+#include <cmath>
 #include "Methods/Method.hpp"
+#include "RKTest.hpp"
 #define FUNC [](double t, double x)
 using namespace std;
 
-void plotDiffEQ(vector<double> x, vector<double> t, int T, double DT, string title, string fname);
 
-const int MAX_TIME = 5;
-const double DT = 0.2;
+const int MAX_TIME = 1;
 auto testStep = FUNC{return -x;};
 
 
-void simMethod(Method* m, vector<double>& v, vector<double>& t){
-	for(int i = 0; i < MAX_TIME/DT; i++){
+void simMethod(Method* m, vector<double>& v, vector<double>& t, double dt){
+	for(int i = 0; i < MAX_TIME/dt; i++){
 		v.push_back(m->getX());
 		t.push_back(m->getT());
 		m->step();
 	}
+	// cout << t.back() << endl;
 }
 
 int main(){
 	vector<double> vals;
 	vector<double> time;
-	Method* ec = new EC(1,DT,testStep);
-	Method* rk = new RK(1,DT,testStep);
 
-	simMethod(ec,vals,time);
+	vector<double> error;
+	vector<double> dt;
 
-	plotDiffEQ(vals,time,MAX_TIME,DT,"Euler-Cromer","ec.png");
+	Method* rk = new RK(1,0.1,testStep);
 
-	vals.erase(vals.begin(),vals.end());
-	time.erase(time.begin(),time.end());
-	
-	simMethod(rk,vals,time);
+	for(double t = 0.05; t > 0.001; t -= 0.001){
+		rk->reset(1,t);
+		simMethod(rk,vals,time,t);
+		double e = globalError(vals,time);
+		error.push_back(e);
+		dt.push_back(t);
 
-	plotDiffEQ(vals,time,MAX_TIME,DT,"Runge-Kutta","rk.png");
+		//cout << t << "\t" << e << endl;
 
-	delete ec;
+		vals.erase(vals.begin(),vals.end());
+		time.erase(time.begin(),time.end());
+	}
+
+	auto plot = toLogLog(dt, error);
+	auto line = getLeastSquares(plot.first, plot.second);
+
+	cout << line.first << " " << line.second << endl;
+
+	plotErrorAndLine(plot,line,"Runge-Kutta","rk.png");
+
 	delete rk;
 	return 0;
 }
