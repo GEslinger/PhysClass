@@ -1,5 +1,7 @@
 #include "Method.hpp"
 
+// Runge-Kutta step method
+
 void RK::step(){
 	double t1 = t;
 	double t2 = t1 + h/2;
