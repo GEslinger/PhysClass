@@ -109,10 +109,12 @@ int main(){
 		addNextPoint(p,dx,dy,dz);	// Add points!
 	}
 
-	cout << "Plotting phase space and z vs t...\n";
+	cout << "Plotting phase space and vars vs t...\n";
 
 	plot3DCurve(p.x,p.y,p.z,s,r,b);	// Plot graphs
-	plotOneVar(p.z,p.t,s,r,b);
+	plotOneVar(p.x,p.t,"x",s,r,b);
+	plotOneVar(p.y,p.t,"y",s,r,b);
+	plotOneVar(p.z,p.t,"z",s,r,b);
 
 	resetPath(p);	// Reset the path
 

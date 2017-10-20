@@ -3,10 +3,26 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+#include <string>
 using namespace std;
 
 // Graphing functions!
-// And input double
+// And a couple misc tools
+
+double getMaxVal(vector<double> v){
+	double max = v[0];
+	for(int i = 0; i < v.size(); i++){
+		if(v[i] > max) max = v[i];
+	}
+	return max;
+}
+double getMinVal(vector<double> v){
+	double min = v[0];
+	for(int i = 0; i < v.size(); i++){
+		if(v[i] < min) min = v[i];
+	}
+	return min;
+}
 
 void plotErrorAndLine(vector<double> dt, vector<double> error, pair<double,double> line, string title, string fname){ // Plotting the log-log of error, dt, and trendline
 	Gnuplot gp;
@@ -48,18 +64,18 @@ void plot3DCurve(vector<double> x, vector<double> y, vector<double> z, double s,
 	gp.send1d(boost::make_tuple(x,y,z));
 }
 
-void plotOneVar(vector<double> v, vector<double> t, double s, double r, double b){	// One variable over time
+void plotOneVar(vector<double> v, vector<double> t, string var, double s, double r, double b){	// One variable over time
 	Gnuplot gp;
 
 	gp << setprecision(3);
 	gp << "set xrange [0:" << t.back() << "]\n";
-	gp << "set yrange [0:45]\n";
+	gp << "set yrange [" << getMinVal(v) << ":" << getMaxVal(v) << "]\n";
 	gp << "set xlabel \"t\"\n";
-	gp << "set ylabel \"z\"\n";
+	gp << "set ylabel \"" << var << "\"\n";
 	gp << "set format y \"%.1f\"\n";
 	gp << "set term png size 720,480 font \"FreeSerif,12\"\n";
 	gp << "set title \"Z vs t of the Lorenz System, {/Symbol s} = " << s << ", {/Symbol r} = " << r << "{/Symbol b} = " << b << "\"\n";
-	gp << "set output \"zvt.png\"\n";
+	gp << "set output \"" << var << "vt.png\"\n";
 	gp << "plot '-' with lines lc rgb \"black\" notitle\n";
 	gp.send1d(boost::make_tuple(t,v));
 }
