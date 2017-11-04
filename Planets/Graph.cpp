@@ -23,7 +23,7 @@ void graphSystem(vector<vec3D> paths[], int maxP, int base, double scale, string
 	gp << "set title \"ZOLAR ZYZDEM\"\n"; 
 	gp << "set output \"" << fname << "\"\n";
 	gp << "set hidden3d\n";
-	gp << "set view 60, 60, 1, 1.5\n";
+	gp << "set view 90, 60, 1, 1.5\n";
 	gp << "splot ";
 
 	for(int i = 0; i < maxP; i++){

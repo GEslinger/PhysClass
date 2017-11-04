@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 #include "Planet.hpp"
 #include "Simulate.hpp"
 using namespace std;
@@ -44,6 +45,7 @@ int main(){
 
 	for(int i = 0; i < MAX_PLANETS; i++){track[i] = vector<vec3D>{};}
 
+	cout << setprecision(9);
 	int points = 0;
 
 	for(double t = 0; t < MAX_TIME; t += dt){
@@ -79,6 +81,7 @@ int main(){
 	double ecc = getEcc(track[0],track[3]);
 	cout << "Eccentricity: " << ecc << endl;
 	cout << "Percent error: " << (abs(0.0167-ecc)/0.0167)*100 << "%" << endl;
+	cout << "Period of Earth: " << getPeriod(track[0],track[1],time) << endl;
 
 	for(Planet* p : terran){
 		delete p;

@@ -1,6 +1,7 @@
 #include <vector>
 #include <utility>
 #include <cmath>
+#include <iostream>
 #include "Planet.hpp"
 using namespace std;
 
@@ -14,15 +15,21 @@ pair<double,double> extrema(vector<double> v){
 	return make_pair(min,max);
 }
 
+template<typename T> int sgn(T val){
+	return (val > T(0)) - (val < T(0));
+}
+
+double getMag(vec3D v){
+	return sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+}
+
 double getEcc(vector<vec3D> base, vector<vec3D> planet){
 	vector<double> dists;
 
 	for(int i = 0; i < base.size(); i++){
-		double x = base[i].x-planet[i].x;
-		double y = base[i].y-planet[i].y;
-		double z = base[i].z-planet[i].z;
 
-		double dist = sqrt(x*x+y*y+z*z);
+		double dist = getMag(base[i]-planet[i]);
+
 		dists.push_back(dist);
 	}
 
@@ -31,4 +38,25 @@ double getEcc(vector<vec3D> base, vector<vec3D> planet){
 	double b = periaph.first;
 
 	return (a-b)/(a+b);
+}
+
+double getPeriod(vector<vec3D> base, vector<vec3D> planet, vector<double> time){
+	vec3D firstPos = planet[0]-base[0];
+	double lastr = 0;
+	double lastdr = 0;
+
+	for(int i = 0; i < base.size(); i++){
+		double r = getMag(firstPos - (planet[i]-base[i]));
+		double dr = lastr - r;
+		cout << dr << "\t" << lastdr << "\t" << r << endl;
+
+		if(sgn(lastdr) > 0 && sgn(dr) < 0){
+			return time[i];
+		}
+
+		lastdr = dr;
+		lastr = r;
+	}
+
+	return -1;
 }

@@ -4,7 +4,7 @@ LIBS = -lboost_system -lboost_iostreams
 EXECS = Simulate
 OBJS = Planet.o Simulate.o Graph.o Calcs.o
 CXXFLAGS = $(STD)
-LFLAGS = $(STD) $(LIBS)
+LFLAGS = $(STD) -static -static-libgcc $(LIBS)
 
 all : $(EXECS)
 
