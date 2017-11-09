@@ -1,7 +1,10 @@
 #ifndef PLANET_H
 #define PLANET_H
 
-struct vec3D{
+// Main header file for the whole project
+// Includes implementation of vec3D
+
+struct vec3D{	// vec3D contains x,y,z and overloads operations for addition,subraction, and using scalars
 	double x;
 	double y;
 	double z;
@@ -59,21 +62,21 @@ struct vec3D{
 
 
 
-class Planet{
+class Planet{	// Planet class
 public:
-	Planet(vec3D pos0, vec3D vel0, double m);
-	vec3D getPos() const;
+	Planet(vec3D pos0, vec3D vel0, double m);	// Constructor using initial position, velocity, and mass
+	vec3D getPos() const;	// Accessor methods
 	vec3D getVel() const;
 	double getMass() const;
 	double getT() const;
-	void tStep(vec3D acc, double dt);
-	void update();
+	void tStep(vec3D acc, double dt);	// Timestep using acceleration and dt
+	void update();			// Update positions and velocities
 private:
-	vec3D nextPos;
-	vec3D nextVel;
+	vec3D nextPos;	// The change in position
+	vec3D nextVel;	// Velocity
 	vec3D pos;
 	vec3D vel;
-	double t = 0;
+	double t = 0;	// Planet is created with time = 0
 	double mass;
 };
 

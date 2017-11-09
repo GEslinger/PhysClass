@@ -7,10 +7,16 @@
 #include "Planet.hpp"
 using namespace std;
 
+/*****************************************************************************
+
+GRAPHING PROGRAM! To graph both the system and the log-log plot
+
+*****************************************************************************/
+
 void graphSystem(vector<vec3D> paths[], int planets, int asts, int base, double scale, string fname){
 	Gnuplot gp;
 
-	double sz = scale*149597870700; // Scale in AU
+	double sz = scale*149597870700; // Scale from au to meters
 
 	gp << setprecision(3);
 	gp << "set xrange [" << -sz << ":" << sz << "]\n";
@@ -56,11 +62,7 @@ void graphSystem(vector<vec3D> paths[], int planets, int asts, int base, double 
 void graphLogLog(vector<double> lSMA, vector<double> lPeriod){
 	Gnuplot gp;
 
-	// for(double d : lSMA){
-	// 	cout << d << endl;
-	// }
-	auto line = getLeastSquares(lSMA,lPeriod);
-	cout << line.first << "\t" << line.second << endl;
+	auto line = getLeastSquares(lSMA,lPeriod);			// Get the least squares parameters (slope, intercept) from the Calcs.cpp file
 
 	gp << "set xrange [20:35]\n";
 	gp << "set yrange [0:30]\n";

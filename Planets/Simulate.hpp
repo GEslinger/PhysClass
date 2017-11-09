@@ -4,6 +4,8 @@
 #include <string>
 #include "Planet.hpp"
 
+// Header file for Simulate.cpp
+
 void graphSystem(std::vector<vec3D> paths[], int maxP, int asts, int base, double scale, std::string fname);
 void graphLogLog(std::vector<double> lSMA, std::vector<double> lPeriod);
 double getEcc(std::vector<vec3D> base, std::vector<vec3D> planet);
