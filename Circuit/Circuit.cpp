@@ -34,12 +34,12 @@ void Circuit::reset(double x0, double y0, double z0){
 	t = 0;
 }
 
-void Circuit::tStep(double h){
-	double nextX = RK4Step(t, x, y, z, h, dx);	// Calculate the next
-	double nextY = RK4Step(t, y, x, z, h, dy);
+void Circuit::tStep(double h){					// Timestep function
+	double nextX = RK4Step(t, x, y, z, h, dx);	// Calculate the next values for x,y,z
+	double nextY = RK4Step(t, y, x, z, h, dy);	// Not modifying right away to preserve order of integrator
 	double nextZ = RK4Step(t, z, x, y, h, dz);
 
-	x = nextX;
+	x = nextX;	// Proceed to the the next time all at once
 	y = nextY;
 	z = nextZ;
 
@@ -47,7 +47,7 @@ void Circuit::tStep(double h){
 }
 
 
-double Circuit::getX() const{
+double Circuit::getX() const{	// trivialllll
 	return x;
 }
 double Circuit::getY() const{

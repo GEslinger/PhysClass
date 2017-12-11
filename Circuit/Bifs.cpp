@@ -86,8 +86,9 @@ int main(){
 
 	Circuit* chua = new Circuit(0.,0.,0.5,VC1,VC2,IL);	// Chua's Circuit Object
 
+
 	cout << "Generating Bifurcation for C1...\n";		// Generating and plotting Bifurcation Diagrams
-	doBifur(chua, &Circuit::getX, C1, 1.2e-3, 3e-3, 2e-6, "C_1", "V_{C_1}", "bifc1.png");	// Notice how the second argument is a reference to the function
+	doBifur(chua, &Circuit::getX, C1, 1.4e-3, 3e-3, 2e-6, "C_1", "V_{C_1}", "bifc1.png");	// Notice how the second argument is a reference to the function
 	cout << "\nDone\n";																		// that gets the value of C1 (x)
 
 
@@ -97,7 +98,7 @@ int main(){
 
 
 	cout << "Generating Bifurcation for L...\n";
-	doBifur(chua, &Circuit::getZ, L, 0.04, 0.12, 1e-4, "L", "I_L", "bifl.png");
+	doBifur(chua, &Circuit::getZ, L, 0.04, 0.109, 1e-4, "L", "I_L", "bifl.png");
 	cout << "\nDone\n";
 
 	delete chua;	// Clean up the traaaash!

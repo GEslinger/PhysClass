@@ -44,12 +44,12 @@ Hurray!
 
 
 const double MAX_TIME = 100;		// Maximum time to simulate
-const double DT = 5e-4;				// Size of timestep
+const double DT = 2e-5;				// Size of timestep
 const double INTERVAL = 1e-3;		// Interval to record points for plotting double scroll
 
 double R = 10;			// Resistance of R
 double L = 6.7e-2;		// Inductance of L
-double C1 = 2.15e-3;	// Capacitance of C1 
+double C1 = 2e-3;	// Capacitance of C1 
 double C2 = 8e-2;		// Capacitance of C2
 
 auto N = [](double V){return -V/sqrt(V*V+70);};		// Function describing I-V curve of N_R
